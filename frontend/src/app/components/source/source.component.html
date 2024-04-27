@@ -1,0 +1,10 @@
+<div class="source">
+  @if(isVideo){
+  <video autoplay loop [volume]="volume">
+    <source [src]="source" type="video/mp4" />
+    Your browser does not support the video tag.
+  </video>
+  } @else if (isImage) {
+  <img [src]="source" />
+  }
+</div>

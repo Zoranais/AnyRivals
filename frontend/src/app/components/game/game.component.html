@@ -1,0 +1,50 @@
+<div class="container">
+  @if (isLoading){
+  <h2>Connecting...</h2>
+  <mat-spinner></mat-spinner>
+  } @else if (!isJoined){
+  <mat-form-field>
+    <mat-label>Name</mat-label>
+    <input type="text" matInput [(ngModel)]="name" />
+  </mat-form-field>
+  <button
+    mat-raised-button
+    color="accent"
+    disabled="{{ !validateName() }}"
+    (click)="join()"
+  >
+    Join
+  </button>
+  } @else if (game){
+  <div class="lobby">
+    <app-player-list [players]="game.players"></app-player-list>
+    <div class="main-content">
+      <p class="title" *ngIf="game">{{ game.name }} - {{ game.externalId }}</p>
+      @if (isPreparing()){
+      <h2>
+        Your game is preparing...<br />
+        Waiting time may vary depending on the number of rounds and their`s
+        types.
+      </h2>
+      <mat-spinner></mat-spinner>
+      } @else if(isWaiting()){
+      <button color="accent" mat-raised-button (click)="startGame()">
+        Start Game
+      </button>
+      } @else if(isDistributing && round) {
+      <app-question
+        [round]="round"
+        (answerSubmitted)="respond($event)"
+      ></app-question>
+      } @else if (isRevealing && correctAnswer != undefined) {
+      <p class="title">{{ correctAnswer }}</p>
+      } @else if (isEnded()){
+      <p class="title">Game Ended</p>
+      <p class="sub-title" *ngIf="winner">
+        Winner {{ winner.name }} with score {{ winner.score }}
+      </p>
+      }
+    </div>
+  </div>
+  }
+</div>

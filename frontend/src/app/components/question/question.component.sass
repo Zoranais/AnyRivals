@@ -1,0 +1,26 @@
+@import 'color'
+.container
+    display: flex
+    align-items: center
+    justify-content: center
+    flex-direction: column
+
+    .answer-container
+        display: grid
+        grid-template-columns: repeat(2, minmax(200px, 1fr))
+        gap: 10px 10px
+
+    .answer
+        background-color: $primary-light
+        border-radius: 10px
+        padding: 10px
+        margin: 10px
+        min-width: 150px
+        max-width: 300px
+        user-select: none
+        opacity: 0.5
+
+    .selectable
+        cursor: pointer
+        &:hover
+            background-color: darken($primary-light, 5%)
