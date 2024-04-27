@@ -17,8 +17,10 @@ jobs:
         with:
           dotnet-version: "8.0.x"
       - name: Restore
-        run: dotnet restore
+        run: |
+          cd backend
+          dotnet restore ./AnyRivals.Web
       - name: Build
-        run: dotnet build
+        run: dotnet build ./AnyRivals.Web
       - name: Run tests
-        run: dotnet tests
+        run: dotnet test

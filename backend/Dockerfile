@@ -9,19 +9,20 @@ EXPOSE 8081
 FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 ARG BUILD_CONFIGURATION=Release
 WORKDIR /src
-COPY ["RhythmRivals.WebAPI/RhythmRivals.WebAPI.csproj", "RhythmRivals.WebAPI/"]
-COPY ["RhythmRivals.BLL/RhythmRivals.BLL.csproj", "RhythmRivals.BLL/"]
-COPY ["RhythmRivals.Common/RhythmRivals.Common.csproj", "RhythmRivals.Common/"]
-RUN dotnet restore "./RhythmRivals.WebAPI/./RhythmRivals.WebAPI.csproj"
+COPY ["AnyRivals.Domain/AnyRivals.Domain.csproj", "AnyRivals.Domain/"]
+COPY ["AnyRivals.Application/AnyRivals.Application.csproj", "AnyRivals.Application/"]
+COPY ["AnyRivals.Infrastructure/AnyRivals.Infrastructure.csproj", "AnyRivals.Infrastructure/"]
+COPY ["AnyRivals.Web/AnyRivals.Web.csproj", "AnyRivals.Web/"]
+RUN dotnet restore "./AnyRivals.Web/./AnyRivals.Web.csproj"
 COPY . .
-WORKDIR "/src/RhythmRivals.WebAPI"
-RUN dotnet build "./RhythmRivals.WebAPI.csproj" -c $BUILD_CONFIGURATION -o /app/build
+WORKDIR "/src/AnyRivals.Web"
+RUN dotnet build "./AnyRivals.Web.csproj" -c $BUILD_CONFIGURATION -o /app/build
 
 FROM build AS publish
 ARG BUILD_CONFIGURATION=Release
-RUN dotnet publish "./RhythmRivals.WebAPI.csproj" -c $BUILD_CONFIGURATION -o /app/publish /p:UseAppHost=false
+RUN dotnet publish "./AnyRivals.Web.csproj" -c $BUILD_CONFIGURATION -o /app/publish /p:UseAppHost=false
 
 FROM base AS final
 WORKDIR /app
 COPY --from=publish /app/publish .
-ENTRYPOINT ["dotnet", "RhythmRivals.WebAPI.dll"]
+ENTRYPOINT ["dotnet", "AnyRivals.Web.dll"]
