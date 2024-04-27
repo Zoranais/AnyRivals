@@ -12,15 +12,16 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Setup
-        uses: actions/setup-dotnet@v3
-        with:
-          dotnet-version: "8.0.x"
-      - name: Restore
-        run: |
-          cd ./backend
-          dotnet restore ./AnyRivals.Web
-      - name: Build
-        run: dotnet build ./AnyRivals.Web
-      - name: Run tests
-        run: dotnet test
+        - uses: actions/checkout@v3
+        - name: Setup
+          uses: actions/setup-dotnet@v3
+          with:
+            dotnet-version: "8.0.x"
+        - name: Restore
+          run: |
+            cd backend
+            dotnet restore ./AnyRivals.Web
+        - name: Build
+          run: dotnet build ./AnyRivals.Web
+        - name: Run tests
+          run: dotnet test
