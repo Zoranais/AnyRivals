@@ -22,6 +22,10 @@ jobs:
             cd backend
             dotnet restore ./AnyRivals.Web
         - name: Build
-          run: dotnet build ./AnyRivals.Web
+          run: |
+            cd backend
+            dotnet build ./AnyRivals.Web
         - name: Run tests
-          run: dotnet test
+          run: |
+            cd backend
+            dotnet test
